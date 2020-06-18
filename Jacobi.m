@@ -1,8 +1,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % This program test Jacobi Method using diagonal matrix DT 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-clc; clear all;
-%create matrix
+clc; clear all; % to make it clear 
+%create matrix 
 N=4; 
 alpha=0.05;
 beta =-0.6;
