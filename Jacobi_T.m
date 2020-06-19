@@ -4,8 +4,8 @@
 clc; clear all;
 %create matrix
 N=4; 
-alpha=0.05;
-beta =-0.6;
+alpha=1;
+beta =1;
 dx=0.5;
 dy=0.4;
 A=A2D(N,alpha,beta,dx,dy);
@@ -27,8 +27,9 @@ r=zeros(n,1);  % residual
 e=zeros(n,1);  % error 
 
 k=1000; % number of iteration 
-for i=1:k
-    uk=u0+ T\(b-A*u0);
+for i=1:k 
+    r=b-A*u0;
+    uk=u0+ solve(T,r);
     r(i)=norm(A*uk-b);
     e(i)=norm(uk-u) ;
     u0=uk;

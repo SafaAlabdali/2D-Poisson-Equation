@@ -4,10 +4,11 @@
 clc; clear all; % to make it clear 
 %create matrix 
 N=4; 
-alpha=0.05;
-beta =-0.6;
+alpha=1;
+beta =1 ;
 dx=0.5;
 dy=0.4;
+
 A=A2D(N,alpha,beta,dx,dy);
 n=size(A);
 n=n(1);
@@ -26,7 +27,8 @@ e=zeros(k,1);  % error
 
 for i=1:k
     %uk=u0 + inv(D) *(b-A*u0)
-    uk=u0+( D \(b-A*u0) );
+    r=b-A*u0;
+    uk=u0+ solve(D,r);%( D \(b-A*u0) );
     r(i)=norm(A*uk-b);
     e(i)=norm(uk-u) ;
     u0=uk;
