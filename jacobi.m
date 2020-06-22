@@ -1,3 +1,6 @@
+%This function solves linear system Av=r by 
+% jacobi method 
+
 function v= jacobi(A,r)
 n=size(A);
 n=n(1);
