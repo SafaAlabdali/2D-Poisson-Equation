@@ -3,7 +3,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clc; clear all;
 %create matrix
-N=4; 
+N=10; 
 alpha=1;
 beta =1;
 dx=0.5;
@@ -21,7 +21,7 @@ b=A*u;
 T = zeros(n,n);
 T(1:1+n:n*n) = diag(A);
 T(n+1:1+n:n*n) = diag(A,1);
-%T(  2:1+N:N*N-N) = diag(A,-1);
+%T(2:1+N:N*N-N) = diag(A,-1);
 u0=zeros(n,1); % initial vector 
 r=zeros(n,1);  % residual 
 e=zeros(n,1);  % error 
