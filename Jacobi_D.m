@@ -25,6 +25,8 @@ r=zeros(n,1); % residual
 k=100; % number of iterations
 res=zeros(k,1);  % residual 
 e=zeros(k,1);  % error 
+res_0=norm(A*u0-b);
+e_0=norm(u0-u) ;
 for i=1:k
     %uk=u0 + inv(D) *(b-A*u0)
     r=b-A*u0;
@@ -37,8 +39,8 @@ end
 spy(A)
 title('matlab spy plot for matrix A')
 figure 
-semilogy(1:k,res/res(1));
+semilogy(1:k,res/res_0);
 hold on 
-semilogy(1:k,e/e(1));
+semilogy(1:k,e/e_0);
 legend ('Residual','Error');
 title('Jacobi Method with matrix D')

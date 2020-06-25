@@ -30,6 +30,8 @@ r=zeros(n,1);  % residual
 k=100; % number of iteration 
 e=zeros(1,k);  % norm of error at every iteration
 res=zeros(1,k); % norm of residual at every iteration
+res_0=norm(A*u0-b);
+e_0=norm(u0-u);
 for i=1:k 
     r=b-A*u0;
     uk=u0+ T\r;
@@ -41,9 +43,9 @@ end
 spy(A)
 title('matlab spy plot for matrix A')
 figure 
-semilogy(1:k,res/res(1));
+semilogy(1:k,res/res_0);
 hold on 
-semilogy(1:k,e/e(1));
+semilogy(1:k,e/e_0);
 legend ('Residual','Error');
 title('Jacobi Method with matrix T')
 
