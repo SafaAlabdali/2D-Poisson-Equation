@@ -3,11 +3,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clc; clear all;
 %create matrix
-N=10; 
+N=16; 
 alpha=1;
-beta =1;
-dx=0.5;
-dy=0.4;
+beta =0.1;
+Lx=1.0; % Physical size of the domain in X-direction
+Ly=0.1; % Physical size of the domain in Y-direction
+dx=Lx/N;
+dy=Ly/N;
+
 A=A2D(N,alpha,beta,dx,dy);
 
 n=size(A);
@@ -21,16 +24,16 @@ b=A*u;
 T = zeros(n,n);
 T(1:1+n:n*n) = diag(A);
 T(n+1:1+n:n*n) = diag(A,1);
-%T(2:1+N:N*N-N) = diag(A,-1);
+T(2:1+n:n*n-n) = diag(A,-1);
 u0=zeros(n,1); % initial vector 
 r=zeros(n,1);  % residual 
-e=zeros(n,1);  % error 
-
-k=1000; % number of iteration 
+k=100; % number of iteration 
+e=zeros(1,k);  % norm of error at every iteration
+res=zeros(1,k); % norm of residual at every iteration
 for i=1:k 
     r=b-A*u0;
-    uk=u0+ solve(T,r);
-    r(i)=norm(A*uk-b);
+    uk=u0+ T\r;
+    res(i)=norm(A*uk-b);
     e(i)=norm(uk-u) ;
     u0=uk;
 end 
@@ -38,9 +41,9 @@ end
 spy(A)
 title('matlab spy plot for matrix A')
 figure 
-loglog(1:k,r);
+semilogy(1:k,res/res(1));
 hold on 
-loglog(1:k,e);
+semilogy(1:k,e/e(1));
 legend ('Residual','Error');
 title('Jacobi Method with matrix T')
 

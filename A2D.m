@@ -1,4 +1,8 @@
 function M= A2D(N,alpha,beta,dx,dy)
+
+% -\Laplace u + \alpha u + \beta (u-v)=r_u
+% -\Laplace v + \alpha v + \beta (v-u)=r_v
+
     if (alpha < 0)
         fprintf('Alpha must be positive !');
         exit;
@@ -7,9 +11,9 @@ function M= A2D(N,alpha,beta,dx,dy)
     gamma_y=1/dy^2;
     
     % diagonal block matrix 
-    A_diag=eye(N-1) *( -2*(gamma_x+gamma_y) + alpha +beta );
-    A_diag =A_diag + diag(ones(N-2,1),1)*gamma_y ;
-    A_diag =A_diag + diag(ones(N-2,1),-1) *gamma_y;
+    A_diag=eye(N-1) *( 2*(gamma_x+gamma_y) + alpha +beta );
+    A_diag =A_diag - diag(ones(N-2,1),1)*gamma_y ;
+    A_diag =A_diag - diag(ones(N-2,1),-1) *gamma_y;
 
     
      % off diagonal block matrix 

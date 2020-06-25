@@ -28,16 +28,22 @@ A22_tild=A22;
 %= 4) tridiagonal
 %A22_tild(1:1+m:m*m) = diag(A22);   
 %A22_tild(m+1:1+m:m*m) = diag(A22,1);
+%A22_tild(2:1+m:m*m-m) = diag(A22,-1);
+
 
 %=================compute r1_tild==========
-r1_tild=r1- A12 *(A22_tild \ r2 ) ;
+r0 = jacobi(A22_tild,r2);
+% r0 = A22_tild\r2; (use this for testing only)
+r1_tild=r1- A12 * r0;
 
 %================solve sv=r1_tild=============
 S = A11 - A12 * inv(A22_tild) *A21 ;
 % jacobi method 
+% v1 = S\r1_tild; (use this for testing only)
 v1=jacobi(S,r1_tild);
 %================compute v2_tild=======
 v2=jacobi(A22_tild,(r2-A21*v1));
+%v2 = A22_tild\(r2-A21*v1); (use this for testing only)
 
 v=zeros(n,1);
 v(1:n/2) = v1;

@@ -1,8 +1,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% This program test Jacobi Method using diagonal matrix DT 
+% This program test Jacobi Method using tridiagonal matrix T 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-clc; clear all; % to make it clear 
-%create matrix 
+clc; clear all;
+%create matrix
 N=16; 
 alpha=1;
 beta =0.1;
@@ -11,6 +11,7 @@ Ly=0.1; % Physical size of the domain in Y-direction
 dx=Lx/N;
 dy=Ly/N;
 A=A2D(N,alpha,beta,dx,dy);
+
 n=size(A);
 n=n(1);
 % create random vector u 
@@ -18,17 +19,21 @@ u=rand(n,1);
 % find the vecto b 
 b=A*u;
 %solve for Au=b
-D=diag(diag(A)); % diagonal matrix 
+% construct tridiagonal mat 
+D = zeros(n,n);
+D(1:1+n:n*n) = diag(A);
+T = zeros(n,n);
+T(1:1+n:n*n) = diag(A);
+T(n+1:1+n:n*n) = diag(A,1);
+%T(2:1+N:N*N-N) = diag(A,-1);
 u0=zeros(n,1); % initial vector 
-r=zeros(n,1); % residual
-
-k=100; % number of iterations
-res=zeros(k,1);  % residual 
-e=zeros(k,1);  % error 
-for i=1:k
-    %uk=u0 + inv(D) *(b-A*u0)
+k=100; % number of iteration 
+r=zeros(n,1);  % residual 
+e=zeros(1,k);  % norm of error at every iteration
+res=zeros(1,k); % norm of residual at every iteration
+for i=1:k 
     r=b-A*u0;
-    uk=u0+ D\r;
+    uk=u0+ solve(A,r);
     res(i)=norm(A*uk-b);
     e(i)=norm(uk-u) ;
     u0=uk;
@@ -41,4 +46,4 @@ semilogy(1:k,res/res(1));
 hold on 
 semilogy(1:k,e/e(1));
 legend ('Residual','Error');
-title('Jacobi Method with matrix D')
+title('Jacobi Method with Schur-complement approach')
