@@ -5,7 +5,7 @@ clc; clear all;
 %create matrix
 N=16; 
 alpha=1;
-beta =0.1;
+beta =1E3;
 Lx=1.0; % Physical size of the domain in X-direction
 Ly=0.1; % Physical size of the domain in Y-direction
 dx=Lx/N;
